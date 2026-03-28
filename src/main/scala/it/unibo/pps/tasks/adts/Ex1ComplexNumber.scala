@@ -25,6 +25,7 @@ object Ex1ComplexNumbers:
     def complex(re: Double, im: Double): Complex = (re, im)
 
     extension (complex: Complex)
+      
       def re(): Double = complex match
         case (re, im) => re
 

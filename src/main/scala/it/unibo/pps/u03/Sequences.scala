@@ -21,6 +21,41 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(_, t)            => filter(t)(pred)
       case Nil()                 => Nil()
 
+    // added for Lab 4
+    /*
+     * Reverse the sequence
+     * E.g., [10, 20, 30] => [30, 20, 10]
+     * E.g., [10] => [10]
+     * E.g., [] => []
+     */
+    def reverse[A](s: Sequence[A]): Sequence[A] =
+      def rev(curr: Sequence[A], acc: Sequence[A]): Sequence[A] = curr match
+        case Cons(h, t) => rev(t, Cons(h, acc))
+        case Nil() => acc
+      rev(s, Nil())
+
+    /*
+     * Check if the sequence contains the element
+     * E.g., [10, 20, 30] => true if elem is 20
+     * E.g., [10, 20, 30] => false if elem is 40
+     */
+    def contains[A](s: Sequence[A])(elem: A): Boolean = s match
+      case Cons(h, t) => h == elem || contains(t)(elem)
+      case Nil() => false
+
+    /*
+     * Remove duplicates from the sequence
+     * E.g., [10, 20, 10, 30] => [10, 20, 30]
+     * E.g., [10, 20, 30] => [10, 20, 30]
+     */
+    def distinct[A](s: Sequence[A]): Sequence[A] =
+      def inner(curr: Sequence[A], acc: Sequence[A]): Sequence[A] = curr match
+        case Cons(h, t) => if contains(acc)(h) then inner(t, acc) else inner(t, Cons(h, acc))
+        case Nil() => acc
+      reverse(inner(s, Nil()))
+
+    // end added for Lab 4
+
 @main def trySequences =
   import Sequences.* 
   val l = Sequence.Cons(10, Sequence.Cons(20, Sequence.Cons(30, Sequence.Nil())))

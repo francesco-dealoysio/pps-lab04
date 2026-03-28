@@ -6,13 +6,8 @@ import Ex3Stacks.StackImpl
 import it.unibo.pps.u03.Sequences.Sequence
 import it.unibo.pps.u03.Optionals.Optional
 
-/* Tests should be clear, but note they are expressed independently of the 
-   specific implementation -- UNCOMMENT FOR THE EXERCISE! 
-*/
-/**
 class Stacktest:
-
-
+  
   val stack = StackImpl
 
   import stack.*
@@ -31,10 +26,8 @@ class Stacktest:
   @Test def testPushMultipleElementsAndVerifyOrder() =
     val stack = empty[Int].push(10).push(20).push(30)
     assertEquals(Sequence.Cons(30, Sequence.Cons(20, Sequence.Cons(10, Sequence.Nil()))), stack.asSequence())
-  
+
   @Test def testPopMultipleElementsMaintainsOrder() =
     val stack = empty[Int].push(10).push(20)
     val popResult = stack.pop()
     assertEquals(Optional.Just((20, empty[Int].push(10))), popResult)
-
-**/

@@ -1,6 +1,7 @@
 package it.unibo.pps.tasks.adts
 
-import it.unibo.pps.u03.extensionmethods.Sequences.Sequence, Sequence.*
+import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
+//import it.unibo.pps.u03.extensionmethods.Sequences.Sequence, Sequence.*
 
 /*  Exercise 2: 
  *  Implement the below trait, and write a meaningful test.
@@ -111,28 +112,61 @@ object SchoolModel:
        *
        */
       def hasCourse(name: String): Boolean
-  object BasicSchoolModule extends SchoolModule:
-    override type School = Nothing
-    override type Teacher = Nothing
-    override type Course = Nothing
 
-    def teacher(name: String): Teacher = ???
-    def course(name: String): Course = ???
-    def emptySchool: School = ???
+      //def asSequence(): Sequence[]
+
+  object BasicSchoolModule extends SchoolModule:
+    override type School = Sequence[(Teacher, Course)]
+    override type Teacher = String
+    override type Course = String
+
+    def teacher(name: String): Teacher = name
+    def course(name: String): Course = name
+    def emptySchool: School = Nil()
 
     extension (school: School)
-      def courses: Sequence[String] = ???
-      def teachers: Sequence[String] = ???
-      def setTeacherToCourse(teacher: Teacher, course: Course): School = ???
-      def coursesOfATeacher(teacher: Teacher): Sequence[Course] = ???
-      def hasTeacher(name: String): Boolean = ???
-      def hasCourse(name: String): Boolean = ???
+
+      def courses: Sequence[String] =
+        def inner(school: School, seq: Sequence[String]): Sequence[String] = school match
+          case Cons((teacher, course), tail) => inner(tail, Cons(course, seq))
+          case _                             => distinct(seq)
+        inner(school, Nil())
+
+      def teachers: Sequence[String] =
+        def inner(school: School, seq: Sequence[String]): Sequence[String] = school match
+          case Cons((teacher, course), tail) => inner(tail, Cons(teacher, seq))
+          case _                             => distinct(seq)
+        inner (school, Nil ())
+
+      def setTeacherToCourse(teacher: Teacher, course: Course): School =
+        Cons((teacher, course), school)
+
+      def coursesOfATeacher(teacher: Teacher): Sequence[Course] =
+        def inner(school: School, name: String, seq: Sequence[String]): Sequence[String] = school match
+          case Cons((teacher, course), tail) if teacher == name => inner(tail, name, Cons(course, seq))
+          case Cons((teacher, course), tail)                    => inner(tail, name, seq)
+          case _                                                => distinct(seq)
+        inner(school, teacher, Nil())
+
+      def hasTeacher(name: String): Boolean =
+        def inner(school: School, name: String): Boolean = school match
+          case Cons((teacher, course), tail) => teacher == name || inner(tail, name)
+          case Nil()                         => false
+        inner(school, name)
+
+      def hasCourse(name: String): Boolean =
+        def inner(school: School, name: String): Boolean = school match
+          case Cons((teacher, course), tail) => course == name || inner(tail, name)
+          case Nil()                         => false
+        inner(school, name)
+
 @main def examples(): Unit =
   import SchoolModel.BasicSchoolModule.*
+
   val school = emptySchool
   println(school.teachers) // Nil()
   println(school.courses) // Nil()
-  println(school.hasTeacher("John")) // false
+  println("John: " + school.hasTeacher("John")) // false
   println(school.hasCourse("Math")) // false
   val john = teacher("John")
   val math = course("Math")
@@ -150,5 +184,3 @@ object SchoolModel:
   println(school3.hasCourse("Math")) // true
   println(school3.hasCourse("Italian")) // true
   println(school3.coursesOfATeacher(john)) // Cons("Math", Cons("Italian", Nil()))
-
-

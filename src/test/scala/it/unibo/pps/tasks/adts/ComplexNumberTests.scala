@@ -4,9 +4,6 @@ import org.junit.*
 import org.junit.Assert.*
 import Ex1ComplexNumbers.*
 
-/* Tests should be clear, but note they are expressed independently of the 
-   specific implementation  -- UNCOMMENT FOR THE EXERCISE!
-*/
 class ComplexTest:
 
   // Choice of implementation to test
