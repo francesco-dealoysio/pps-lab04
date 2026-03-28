@@ -161,6 +161,9 @@ object SchoolModel:
         inner(school, name)
 
 @main def examples(): Unit =
+  println("nop")
+
+/*
   import SchoolModel.BasicSchoolModule.*
 
   val school = emptySchool
@@ -184,3 +187,4 @@ object SchoolModel:
   println(school3.hasCourse("Math")) // true
   println(school3.hasCourse("Italian")) // true
   println(school3.coursesOfATeacher(john)) // Cons("Math", Cons("Italian", Nil()))
+*/

@@ -3,12 +3,13 @@ package it.unibo.pps.tasks.adts
 import org.junit.*
 import org.junit.Assert.*
 
-import SchoolModel.*
-import it.unibo.pps.u03.Sequences.Sequence
-import Sequence.*
-import BasicSchoolModule.*
 
-class SchoolModelTest:
+
+class _SchoolModelTest:
+  import SchoolModel.*
+  import it.unibo.pps.u03.Sequences.Sequence
+  import Sequence.*
+  import BasicSchoolModule.*
 
   @Test def testCreateTeacher() =
     assertEquals("John", teacher("John"))

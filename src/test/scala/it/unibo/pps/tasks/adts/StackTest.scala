@@ -2,12 +2,12 @@ package it.unibo.pps.tasks.adts
 
 import org.junit.*
 import org.junit.Assert.*
-import Ex3Stacks.StackImpl
-import it.unibo.pps.u03.Sequences.Sequence
-import it.unibo.pps.u03.Optionals.Optional
 
-class Stacktest:
-  
+class _Stacktest:
+  import Ex3Stacks.StackImpl
+  import it.unibo.pps.u03.Sequences.Sequence
+  import it.unibo.pps.u03.Optionals.Optional
+
   val stack = StackImpl
 
   import stack.*
