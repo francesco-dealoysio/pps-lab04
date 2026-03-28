@@ -6,7 +6,7 @@ import org.junit.Assert.*
 /* Lab04 test classes:
   - ComplexTest
   - SchoolModelTest
-  - Stacktest
+  - StackTest
  */
 
 class ComplexTest:
