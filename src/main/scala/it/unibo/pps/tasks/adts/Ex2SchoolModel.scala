@@ -1,6 +1,8 @@
 package it.unibo.pps.tasks.adts
 
-import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
+import it.unibo.pps.u03.Sequences.Sequence
+import Sequence.*
+import scala.annotation.tailrec
 //import it.unibo.pps.u03.extensionmethods.Sequences.Sequence, Sequence.*
 
 /*  Exercise 2: 
@@ -113,12 +115,12 @@ object SchoolModel:
        */
       def hasCourse(name: String): Boolean
 
-      //def asSequence(): Sequence[]
-
   object BasicSchoolModule extends SchoolModule:
     override type School = Sequence[(Teacher, Course)]
     override type Teacher = String
     override type Course = String
+    final val TEACHER: Int = 0
+    final val COURSE: Int = 1
 
     def teacher(name: String): Teacher = name
     def course(name: String): Course = name
@@ -126,22 +128,17 @@ object SchoolModel:
 
     extension (school: School)
 
-      def courses: Sequence[String] =
-        def inner(school: School, seq: Sequence[String]): Sequence[String] = school match
-          case Cons((teacher, course), tail) => inner(tail, Cons(course, seq))
-          case _                             => distinct(seq)
-        inner(school, Nil())
-
       def teachers: Sequence[String] =
-        def inner(school: School, seq: Sequence[String]): Sequence[String] = school match
-          case Cons((teacher, course), tail) => inner(tail, Cons(teacher, seq))
-          case _                             => distinct(seq)
-        inner (school, Nil ())
+        innerSeq(school, Nil(), TEACHER)
+
+      def courses: Sequence[String] =
+        innerSeq(school, Nil(), COURSE)
 
       def setTeacherToCourse(teacher: Teacher, course: Course): School =
         Cons((teacher, course), school)
 
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] =
+        @tailrec
         def inner(school: School, name: String, seq: Sequence[String]): Sequence[String] = school match
           case Cons((teacher, course), tail) if teacher == name => inner(tail, name, Cons(course, seq))
           case Cons((teacher, course), tail)                    => inner(tail, name, seq)
@@ -149,42 +146,18 @@ object SchoolModel:
         inner(school, teacher, Nil())
 
       def hasTeacher(name: String): Boolean =
-        def inner(school: School, name: String): Boolean = school match
-          case Cons((teacher, course), tail) => teacher == name || inner(tail, name)
-          case Nil()                         => false
-        inner(school, name)
+        innerHas(school, name, TEACHER)
 
       def hasCourse(name: String): Boolean =
-        def inner(school: School, name: String): Boolean = school match
-          case Cons((teacher, course), tail) => course == name || inner(tail, name)
-          case Nil()                         => false
-        inner(school, name)
+        innerHas(school, name, COURSE)
 
-@main def examples(): Unit =
-  println("nop")
+    def innerSeq(school: School, seq: Sequence[String], tupIndex: Int): Sequence[String] = school match
+      case Cons(tup, tail) => innerSeq(tail, Cons(tup(tupIndex).asInstanceOf[String], seq), tupIndex)
+      case _               => distinct(seq)
 
-/*
-  import SchoolModel.BasicSchoolModule.*
+    def innerHas(school: School, name: String, tupIndex: Int): Boolean = school match
+      case Cons(tup, tail) => tup(tupIndex) == name || innerHas(tail, name, tupIndex)
+      case Nil()           => false
 
-  val school = emptySchool
-  println(school.teachers) // Nil()
-  println(school.courses) // Nil()
-  println("John: " + school.hasTeacher("John")) // false
-  println(school.hasCourse("Math")) // false
-  val john = teacher("John")
-  val math = course("Math")
-  val italian = course("Italian")
-  val school2 = school.setTeacherToCourse(john, math)
-  println(school2.teachers) // Cons("John", Nil())
-  println(school2.courses) // Cons("Math", Nil())
-  println(school2.hasTeacher("John")) // true
-  println(school2.hasCourse("Math")) // true
-  println(school2.hasCourse("Italian")) // false
-  val school3 = school2.setTeacherToCourse(john, italian)
-  println(school3.teachers) // Cons("John", Nil())
-  println(school3.courses) // Cons("Math", Cons("Italian", Nil()))
-  println(school3.hasTeacher("John")) // true
-  println(school3.hasCourse("Math")) // true
-  println(school3.hasCourse("Italian")) // true
-  println(school3.coursesOfATeacher(john)) // Cons("Math", Cons("Italian", Nil()))
-*/
+  @main def examples =
+    println("nop")
