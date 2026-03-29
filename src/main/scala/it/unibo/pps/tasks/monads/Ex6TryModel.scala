@@ -60,3 +60,6 @@ object Ex6TryModel:
     b <- exec(throw new RuntimeException("error"))
     c <- exec(30)
   yield a + c
+
+
+  //Prova
