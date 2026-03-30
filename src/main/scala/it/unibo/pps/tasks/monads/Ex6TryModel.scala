@@ -1,7 +1,6 @@
 package it.unibo.pps.tasks.monads
 
 import it.unibo.pps.u04.monads.Monads.Monad
-import it.unibo.pps.u04.monads.Monads.Monad
 
 /**
   * Exercise 6: 
@@ -23,18 +22,33 @@ object Ex6TryModel:
 
   def success[A](value: A): Try[A] = TryImpl.Success(value)
   def failure[A](exception: Throwable): Try[A] = TryImpl.Failure(exception)
-  def exec[A](expression: => A): Try[A] = try success(expression) catch failure(_)
+
+  def exec[A](expression: => A): Try[A] =
+    try success(expression)
+    catch
+      case e: Throwable => failure(e)
+
 
   extension [A](m: Try[A]) 
     def getOrElse[B >: A](other: B): B = m match
       case TryImpl.Success(value) => value
       case TryImpl.Failure(_) => other
 
-  given Monad[Try] with
-    override def unit[A](value: A): Try[A] = ???
-    extension [A](m: Try[A]) 
+  //Unit: deve prendere un valore normale e metterlo nel contesto Try.
 
-      override def flatMap[B](f: A => Try[B]): Try[B] = ??? 
+  /*
+  * Flat Map : deve considerare solo il caso Success.
+  * se m è Success(value), applica f(value)
+  * se m è Failure(exception), restituisce subito il fallimento
+  * */
+  given Monad[Try] with
+    override def unit[A](value: A): Try[A] = success(value)
+    extension [A](m: Try[A])
+
+      override def flatMap[B](f: A => Try[B]): Try[B] = m match
+        case TryImpl.Success(value)     => f(value)
+        case TryImpl.Failure(exception) => failure(exception)
+
       
 @main def main: Unit = 
   import Ex6TryModel.*
@@ -62,4 +76,3 @@ object Ex6TryModel:
   yield a + c
 
 
-  //Prova
