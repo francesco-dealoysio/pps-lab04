@@ -5,7 +5,7 @@ package it.unibo.pps.tasks.adts
  *  the test in ComplexTest.
  */
 
-object Ex1ComplexNumbers:
+object _Ex1ComplexNumbers:
 
   trait ComplexADT:
     type Complex

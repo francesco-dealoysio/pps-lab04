@@ -4,9 +4,9 @@ import org.junit.*
 import org.junit.Assert.*
 
 /* Lab04 test classes:
-  - ComplexTest
-  - SchoolModelTest
-  - StackTest
+ * - ComplexTest
+ * - SchoolModelTest
+ * - StackTest
  */
 
 class ComplexTest:

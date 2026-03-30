@@ -2,8 +2,6 @@ package it.unibo.pps.tasks.adts
 
 //import it.unibo.pps.u03.extensionmethods.Sequences.Sequence, Sequence.*
 //import it.unibo.pps.u03.extensionmethods.Optionals.Optional, Optional.*
-import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
-import it.unibo.pps.u03.Optionals.Optional, Optional.*
 
 /*  Exercise 3: 
  *  Implement a Stack ADT
@@ -13,7 +11,9 @@ import it.unibo.pps.u03.Optionals.Optional, Optional.*
  *  -- empty optional is stack is empty
  *  -- a pair of top of the stack and the new stack after removal if not empty
  */
-object Ex3Stacks:
+object _Ex3Stacks:
+  import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
+  import it.unibo.pps.u03.Optionals.Optional, Optional.*
 
   trait StackADT:
     type Stack[A]

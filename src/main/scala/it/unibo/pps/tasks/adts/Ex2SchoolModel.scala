@@ -1,8 +1,5 @@
 package it.unibo.pps.tasks.adts
 
-import it.unibo.pps.u03.Sequences.Sequence
-import Sequence.*
-import scala.annotation.tailrec
 //import it.unibo.pps.u03.extensionmethods.Sequences.Sequence, Sequence.*
 
 /*  Exercise 2: 
@@ -11,7 +8,10 @@ import scala.annotation.tailrec
  *  - reuse Sequences and Optionals as imported above
  *  - For other suggestions look directly to the methods and their description
  */
-object SchoolModel:
+object _SchoolModel:
+  import it.unibo.pps.u03.Sequences.Sequence
+  import Sequence.*
+  import scala.annotation.tailrec
 
   trait SchoolModule:
     type School
@@ -36,7 +36,6 @@ object SchoolModel:
      * @return the course created
      *  */
     def course(name: String): Course
-
     /**
      * This method should return an empty school, namely a school without any teacher and course
      * e.g.,

@@ -1,10 +1,5 @@
 package it.unibo.pps.tasks.typeclasses
 
-import it.unibo.pps.u03.Sequences.Sequence
-import Sequence.*
-import it.unibo.pps.u03.Optionals.Optional
-import it.unibo.pps.u03.Optionals.Optional.*
-
 /*  Exercise 5: 
  *  - Generalise by ad-hoc polymorphism logAll, such that:
  *  -- it can be called on Sequences but also on Optional, or others... 
@@ -19,6 +14,10 @@ import it.unibo.pps.u03.Optionals.Optional.*
  */
 
 object Ex5Traversable:
+  import it.unibo.pps.u03.Sequences.Sequence
+  import Sequence.*
+  import it.unibo.pps.u03.Optionals.Optional
+  import it.unibo.pps.u03.Optionals.Optional.*
 
   def log[A](a: A): Unit = println("The next element is: " + a)
 

@@ -1,6 +1,5 @@
 package it.unibo.pps.tasks.typeclasses
 
-import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
 
 /*  Exercise 4: 
  *  - Complete the implementation of ad-hoc polymorphic sumAll, using summable.sum and summable.zero
@@ -8,7 +7,8 @@ import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
  *  - Uncomment in the main and check if everything works
  */
 
-object Ex4Summables:
+object _Ex4Summables:
+  import it.unibo.pps.u03.Sequences.Sequence, Sequence.*
 
   def sumAllInt(seq: Sequence[Int]): Int = seq match
     case Cons(h, t) => h + sumAllInt(t)
