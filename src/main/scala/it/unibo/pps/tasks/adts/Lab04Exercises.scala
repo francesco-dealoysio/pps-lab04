@@ -28,7 +28,6 @@ object Ex1ComplexNumbers:
 
   object BasicComplexADT extends ComplexADT:
 
-    // Change assignment below: should probably define a case class and use it?
     type Complex = (Double, Double)
     def complex(re: Double, im: Double): Complex = (re, im)
 
@@ -271,7 +270,6 @@ object Ex4Summables:
     def sum(a1: Int, a2: Int): Int = a1 + a2
     def zero: Int = 0
 
-  // write givens for Summable[Double] and Summable[String]
   given Summable[Double] with
     def sum(a1: Double, a2: Double): Double = a1 + a2
     def zero: Double = 0.0
@@ -284,8 +282,6 @@ object Ex4Summables:
     val si = Cons(10, Cons(20, Cons(30, Nil())))
     println:
       sumAllInt(si) // 60
-
-    /* uncomment from here*/
 
     println:
       sumAll(si) // 60
@@ -342,7 +338,8 @@ object Ex5Traversable:
         case Just(a) => consumer(a)
         case Empty() => ()
 
-  /* Per Sequence : se c'è una testa h, applica consumer (h) poi continua ricorsivamente sulla coda t
+  /*
+     Per Sequence : se c'è una testa h, applica consumer (h) poi continua ricorsivamente sulla coda t
      se è vuota, finisce
      Per Optional : Just(a) → applica consumer (a)
      Empty() → non fa nulla.
